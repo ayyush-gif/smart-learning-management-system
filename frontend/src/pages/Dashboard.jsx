@@ -18,7 +18,7 @@ function Dashboard() {
         localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/api/enrollments/my-courses",
+        "https://smart-learning-management-system-4dg6.onrender.com/api/enrollments/my-courses",
         {
           headers: {
             Authorization: `Bearer ${token}`,

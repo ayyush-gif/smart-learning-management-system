@@ -22,7 +22,7 @@ function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://smart-learning-management-system-4dg6.onrender.com/api/auth/login",
         formData
       );
 

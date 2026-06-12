@@ -11,7 +11,7 @@ function Courses() {
   const fetchCourses = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/courses"
+        "https://smart-learning-management-system-4dg6.onrender.com/api/courses"
       );
 
       setCourses(res.data);
@@ -26,7 +26,7 @@ function Courses() {
         localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:5000/api/enrollments",
+        "https://smart-learning-management-system-4dg6.onrender.com/api/enrollments",
         { courseId },
         {
           headers: {
