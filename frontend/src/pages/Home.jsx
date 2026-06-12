@@ -1,25 +1,36 @@
+import { Link } from "react-router-dom";
+
 function Home() {
   return (
-    <div className="container">
-      <h1
-        style={{
-          marginTop: "50px",
-          fontSize: "3rem",
-        }}
-      >
-        Smart Learning Management System
-      </h1>
+    <section className="hero">
+      <div className="container">
+        <h1>
+          Master Skills.
+          <br />
+          Build Your
+          <span> Future.</span>
+        </h1>
 
-      <p
-        style={{
-          marginTop: "20px",
-          fontSize: "1.2rem",
-        }}
-      >
-        Learn, Enroll and Grow with
-        professional courses.
-      </p>
-    </div>
+        <p>
+          Learn industry-ready skills with
+          premium courses designed for
+          students, developers, and future
+          engineers.
+        </p>
+
+        <div
+          style={{
+            marginTop: "30px",
+          }}
+        >
+          <Link to="/courses">
+            <button className="btn">
+              Explore Courses
+            </button>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 

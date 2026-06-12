@@ -15,79 +15,62 @@ function Navbar() {
   };
 
   return (
-    <nav
-      style={{
-        background: "#1e293b",
-        color: "white",
-        padding: "15px 30px",
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
-      <h2>Smart LMS</h2>
-
-      <div>
-        <Link
-          to="/"
+    <nav>
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h2
           style={{
-            color: "white",
-            marginRight: "15px",
+            color: "#facc15",
+            cursor: "pointer",
           }}
         >
-          Home
-        </Link>
+          Smart LMS
+        </h2>
 
-        <Link
-          to="/courses"
+        <div
           style={{
-            color: "white",
-            marginRight: "15px",
+            display: "flex",
+            gap: "20px",
+            alignItems: "center",
           }}
         >
-          Courses
-        </Link>
+          <Link to="/">Home</Link>
 
-        {!user ? (
-          <>
-            <Link
-              to="/login"
-              style={{
-                color: "white",
-                marginRight: "15px",
-              }}
-            >
-              Login
-            </Link>
+          <Link to="/courses">
+            Courses
+          </Link>
 
-            <Link
-              to="/register"
-              style={{
-                color: "white",
-              }}
-            >
-              Register
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link
-              to="/dashboard"
-              style={{
-                color: "white",
-                marginRight: "15px",
-              }}
-            >
-              Dashboard
-            </Link>
+          {!user ? (
+            <>
+              <Link to="/login">
+                Login
+              </Link>
 
-            <button
-              className="btn"
-              onClick={logoutHandler}
-            >
-              Logout
-            </button>
-          </>
-        )}
+              <Link to="/register">
+                Register
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/dashboard">
+                Dashboard
+              </Link>
+
+              <button
+                className="btn"
+                onClick={logoutHandler}
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
