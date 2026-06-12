@@ -26,7 +26,13 @@ function Dashboard() {
         }
       );
 
-      setCourses(res.data);
+      setCourses(
+        res.data.map((course, index) => ({
+          ...course,
+          progress:
+            [80, 50, 20, 65, 35][index] || 0,
+        }))
+      );
     } catch (error) {
       console.log(error);
     }
@@ -38,22 +44,55 @@ function Dashboard() {
         Welcome, {user?.name}
       </h1>
 
-      <h2
+      {/* Stats Cards */}
+      <div
         style={{
-          marginTop: "20px",
-          marginBottom: "20px",
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "20px",
+          marginTop: "30px",
+          marginBottom: "40px",
         }}
       >
-        My Courses
+        <div className="card">
+          <h3>📚 Enrolled Courses</h3>
+          <h2>{courses.length}</h2>
+        </div>
+
+        <div className="card">
+          <h3>🏆 Learning Status</h3>
+          <h2>Active</h2>
+        </div>
+
+        <div className="card">
+          <h3>🚀 Platform</h3>
+          <h2>Lumina</h2>
+        </div>
+      </div>
+
+      <h2
+        style={{
+          marginBottom: "25px",
+        }}
+      >
+        My Learning Journey
       </h2>
 
       {courses.length === 0 ? (
-        <p>No Courses Enrolled Yet</p>
+        <div className="card">
+          <p>
+            No Courses Enrolled Yet
+          </p>
+        </div>
       ) : (
         courses.map((item) => (
           <div
             key={item._id}
             className="card"
+            style={{
+              marginBottom: "20px",
+            }}
           >
             <h3>
               {item.course.title}
@@ -69,6 +108,38 @@ function Dashboard() {
             <p>
               ₹{item.course.price}
             </p>
+
+            <div
+              style={{
+                marginTop: "15px",
+              }}
+            >
+              <p>
+                Progress:{" "}
+                {item.progress}%
+              </p>
+
+              <div
+                style={{
+                  width: "100%",
+                  height: "12px",
+                  background: "#333",
+                  borderRadius: "10px",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    width: `${item.progress}%`,
+                    height: "100%",
+                    background:
+                      "#facc15",
+                    borderRadius:
+                      "10px",
+                  }}
+                />
+              </div>
+            </div>
           </div>
         ))
       )}
