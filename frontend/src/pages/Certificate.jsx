@@ -1,11 +1,46 @@
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+
 function Certificate() {
   const user = JSON.parse(
     localStorage.getItem("user")
   );
 
+  const downloadCertificate = () => {
+    const input =
+      document.getElementById(
+        "certificate"
+      );
+
+    html2canvas(input).then((canvas) => {
+      const imgData =
+        canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF(
+        "landscape",
+        "mm",
+        "a4"
+      );
+
+      pdf.addImage(
+        imgData,
+        "PNG",
+        10,
+        10,
+        277,
+        190
+      );
+
+      pdf.save(
+        "Lumina-Certificate.pdf"
+      );
+    });
+  };
+
   return (
     <div className="container">
       <div
+        id="certificate"
         className="card"
         style={{
           maxWidth: "900px",
@@ -18,21 +53,16 @@ function Certificate() {
         <h1
           style={{
             color: "#facc15",
-            marginBottom: "20px",
           }}
         >
           🏆 Certificate of Completion
         </h1>
 
         <p>
-          This certificate is proudly awarded to
+          This certificate is awarded to
         </p>
 
-        <h2
-          style={{
-            margin: "20px 0",
-          }}
-        >
+        <h2>
           {user?.name}
         </h2>
 
@@ -43,24 +73,19 @@ function Certificate() {
         <h3
           style={{
             color: "#facc15",
-            margin: "20px 0",
           }}
         >
           Data Structures in C
         </h3>
 
         <p>
-          on the Lumina Learning Platform
+          on Lumina Learning Platform
         </p>
-
-        <br />
 
         <p>
           Date:{" "}
           {new Date().toLocaleDateString()}
         </p>
-
-        <br />
 
         <h3
           style={{
@@ -73,6 +98,21 @@ function Certificate() {
         <p>
           Illuminate Your Learning
         </p>
+      </div>
+
+      <div
+        style={{
+          textAlign: "center",
+        }}
+      >
+        <button
+          className="btn"
+          onClick={
+            downloadCertificate
+          }
+        >
+          📄 Download PDF
+        </button>
       </div>
     </div>
   );

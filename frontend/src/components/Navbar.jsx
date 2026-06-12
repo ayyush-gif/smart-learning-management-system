@@ -49,8 +49,8 @@ function Navbar() {
               src="/logo.png"
               alt="Lumina"
               style={{
-                width: "180px",
-                height: "auto",
+                width: "50px",
+                height: "50px",
                 objectFit: "contain",
               }}
             />
@@ -94,18 +94,6 @@ function Navbar() {
             Courses
           </Link>
 
-          {user && (
-            <>
-             <Link to="/dashboard">
-               Dashboard
-             </Link>
-
-             <Link to="/profile">
-               Profile
-             </Link>
-            </>    
-          )}
-
           {!user ? (
             <>
               <Link to="/login">
@@ -117,12 +105,29 @@ function Navbar() {
               </Link>
             </>
           ) : (
-            <button
-              className="btn"
-              onClick={logoutHandler}
-            >
-              Logout
-            </button>
+            <>
+              <Link to="/dashboard">
+                Dashboard
+              </Link>
+
+              <Link to="/profile">
+                Profile
+              </Link>
+
+              {user.role ===
+                "instructor" && (
+                <Link to="/instructor">
+                  Instructor
+                </Link>
+              )}
+
+              <button
+                className="btn"
+                onClick={logoutHandler}
+              >
+                Logout
+              </button>
+            </>
           )}
         </div>
       </div>

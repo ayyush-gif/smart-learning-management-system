@@ -14,6 +14,7 @@ import Courses from "./pages/Courses";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Certificate from "./pages/Certificate";
+import Instructor from "./pages/Instructor";
 
 
 function App() {
@@ -55,6 +56,11 @@ function App() {
         <Route
           path="/certificate"
           element={<Certificate />}
+        />
+
+        <Route
+          path="/instructor"
+          element={<Instructor />}
         />
 
       </Routes>
