@@ -27,11 +27,19 @@ function Dashboard() {
       );
 
       setCourses(
-        res.data.map((course, index) => ({
-          ...course,
-          progress:
-            [80, 50, 20, 65, 35][index] || 0,
-        }))
+        res.data
+          .filter(
+            (item) => item?.course
+          )
+          .map(
+            (course, index) => ({
+              ...course,
+              progress:
+                [80, 50, 20, 65, 35][
+                  index
+                ] || 0,
+            })
+          )
       );
     } catch (error) {
       console.log(error);
@@ -56,12 +64,16 @@ function Dashboard() {
         }}
       >
         <div className="card">
-          <h3>📚 Enrolled Courses</h3>
+          <h3>
+            📚 Enrolled Courses
+          </h3>
           <h2>{courses.length}</h2>
         </div>
 
         <div className="card">
-          <h3>🏆 Learning Status</h3>
+          <h3>
+            🏆 Learning Status
+          </h3>
           <h2>Active</h2>
         </div>
 
@@ -92,21 +104,24 @@ function Dashboard() {
             className="card"
             style={{
               marginBottom: "20px",
+              border:
+                "2px solid #facc15",
             }}
           >
             <h3>
-              {item.course.title}
+              {item.course?.title}
             </h3>
 
             <p>
               {
                 item.course
-                  .description
+                  ?.description
               }
             </p>
 
             <p>
-              ₹{item.course.price}
+              ₹
+              {item.course?.price}
             </p>
 
             <div
@@ -123,9 +138,12 @@ function Dashboard() {
                 style={{
                   width: "100%",
                   height: "12px",
-                  background: "#333",
-                  borderRadius: "10px",
-                  overflow: "hidden",
+                  background:
+                    "#333",
+                  borderRadius:
+                    "10px",
+                  overflow:
+                    "hidden",
                 }}
               >
                 <div
