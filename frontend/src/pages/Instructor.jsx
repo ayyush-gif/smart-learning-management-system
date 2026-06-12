@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Instructor() {
+  const [courses, setCourses] = useState([]);
+
   const [formData, setFormData] =
     useState({
       title: "",
@@ -10,6 +12,22 @@ function Instructor() {
       price: "",
       image: "",
     });
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const res = await axios.get(
+        "https://smart-learning-management-system-4dg6.onrender.com/api/courses"
+      );
+
+      setCourses(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -47,11 +65,43 @@ function Instructor() {
         price: "",
         image: "",
       });
+
+      fetchCourses();
     } catch (error) {
       alert(
         error.response?.data
           ?.message ||
           "Course Creation Failed"
+      );
+    }
+  };
+
+  const deleteCourse = async (
+    courseId
+  ) => {
+    try {
+      const token =
+        localStorage.getItem("token");
+
+      await axios.delete(
+        `https://smart-learning-management-system-4dg6.onrender.com/api/courses/${courseId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert(
+        "Course Deleted Successfully"
+      );
+
+      fetchCourses();
+    } catch (error) {
+      alert(
+        error.response?.data
+          ?.message ||
+          "Delete Failed"
       );
     }
   };
@@ -68,11 +118,13 @@ function Instructor() {
         Instructor Dashboard
       </h1>
 
+      {/* Create Course */}
       <div
         className="card"
         style={{
           maxWidth: "700px",
           margin: "auto",
+          marginBottom: "40px",
         }}
       >
         <form
@@ -135,6 +187,56 @@ function Instructor() {
           </button>
         </form>
       </div>
+
+      {/* My Courses */}
+      <h2
+        style={{
+          marginBottom: "20px",
+        }}
+      >
+        My Courses
+      </h2>
+
+      {courses.map((course) => (
+        <div
+          key={course._id}
+          className="card"
+          style={{
+            marginBottom: "20px",
+          }}
+        >
+          <h3>{course.title}</h3>
+
+          <p>
+            {course.description}
+          </p>
+
+          <p>
+            <strong>
+              Category:
+            </strong>{" "}
+            {course.category}
+          </p>
+
+          <p>
+            <strong>
+              Price:
+            </strong>{" "}
+            ₹{course.price}
+          </p>
+
+          <button
+            className="btn"
+            onClick={() =>
+              deleteCourse(
+                course._id
+              )
+            }
+          >
+            🗑 Delete Course
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
