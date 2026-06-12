@@ -15,28 +15,76 @@ function Navbar() {
   };
 
   return (
-    <nav>
+    <nav
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
+      }}
+    >
       <div
         className="container"
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          minHeight: "80px",
         }}
       >
-        <h2
+        {/* Logo */}
+        <Link
+          to="/"
           style={{
-            color: "#facc15",
-            cursor: "pointer",
+            textDecoration: "none",
           }}
         >
-          Smart LMS
-        </h2>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+            }}
+          >
+            <img
+              src="/logo.png"
+              alt="Lumina"
+              style={{
+                width: "50px",
+                height: "50px",
+                objectFit: "contain",
+              }}
+            />
 
+            <div>
+              <h2
+                style={{
+                  color: "#facc15",
+                  margin: 0,
+                  fontWeight: "800",
+                  letterSpacing: "2px",
+                }}
+              >
+                LUMINA
+              </h2>
+
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: "12px",
+                  color: "#a1a1aa",
+                }}
+              >
+                Illuminate Your Learning
+              </p>
+            </div>
+          </div>
+        </Link>
+
+        {/* Navigation */}
         <div
           style={{
             display: "flex",
-            gap: "20px",
+            gap: "25px",
             alignItems: "center",
           }}
         >
@@ -45,6 +93,12 @@ function Navbar() {
           <Link to="/courses">
             Courses
           </Link>
+
+          {user && (
+            <Link to="/dashboard">
+              Dashboard
+            </Link>
+          )}
 
           {!user ? (
             <>
@@ -57,18 +111,12 @@ function Navbar() {
               </Link>
             </>
           ) : (
-            <>
-              <Link to="/dashboard">
-                Dashboard
-              </Link>
-
-              <button
-                className="btn"
-                onClick={logoutHandler}
-              >
-                Logout
-              </button>
-            </>
+            <button
+              className="btn"
+              onClick={logoutHandler}
+            >
+              Logout
+            </button>
           )}
         </div>
       </div>
