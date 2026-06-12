@@ -14,6 +14,8 @@ function Courses() {
         "https://smart-learning-management-system-4dg6.onrender.com/api/courses"
       );
 
+      console.log(res.data);
+
       setCourses(res.data);
     } catch (error) {
       console.log(error);
@@ -50,6 +52,7 @@ function Courses() {
         style={{
           textAlign: "center",
           marginBottom: "10px",
+          color: "#facc15",
         }}
       >
         Explore Courses
@@ -75,8 +78,15 @@ function Courses() {
             }}
           >
             <img
-              src={course.image}
+              src={
+                course.image ||
+                "https://via.placeholder.com/600x300"
+              }
               alt={course.title}
+              onError={(e) => {
+                e.target.src =
+                  "https://via.placeholder.com/600x300";
+              }}
               style={{
                 width: "100%",
                 height: "220px",
@@ -90,8 +100,7 @@ function Courses() {
               style={{
                 background: "#facc15",
                 color: "#000",
-                padding:
-                  "5px 12px",
+                padding: "6px 12px",
                 borderRadius: "20px",
                 fontSize: "12px",
                 fontWeight: "600",
@@ -123,14 +132,12 @@ function Courses() {
 
             <button
               className="btn"
-              onClick={() =>
-                enrollCourse(
-                  course._id
-                )
-              }
               style={{
                 width: "100%",
               }}
+              onClick={() =>
+                enrollCourse(course._id)
+              }
             >
               Enroll Now
             </button>
