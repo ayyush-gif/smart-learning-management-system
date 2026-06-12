@@ -139,6 +139,21 @@ function Dashboard() {
                   }}
                 />
               </div>
+
+              <button
+                className="btn"
+                style={{
+                  marginTop: "15px",
+                }}
+                onClick={() =>
+                  window.open(
+                    "/certificate",
+                    "_blank"
+                  )
+                }
+              >
+                🎓 View Certificate
+              </button>
             </div>
           </div>
         ))

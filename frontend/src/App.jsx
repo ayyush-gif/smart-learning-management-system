@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import Courses from "./pages/Courses";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import Certificate from "./pages/Certificate";
 
 
 function App() {
@@ -50,6 +51,12 @@ function App() {
           path="/profile"
           element={<Profile />}
         />
+
+        <Route
+          path="/certificate"
+          element={<Certificate />}
+        />
+
       </Routes>
 
       <Footer />
