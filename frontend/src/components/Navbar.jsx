@@ -95,9 +95,15 @@ function Navbar() {
           </Link>
 
           {user && (
-            <Link to="/dashboard">
-              Dashboard
-            </Link>
+            <>
+             <Link to="/dashboard">
+               Dashboard
+             </Link>
+
+             <Link to="/profile">
+               Profile
+             </Link>
+            </>    
           )}
 
           {!user ? (

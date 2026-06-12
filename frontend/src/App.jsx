@@ -12,6 +12,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Courses from "./pages/Courses";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+
 
 function App() {
   return (
@@ -42,6 +44,11 @@ function App() {
         <Route
           path="/dashboard"
           element={<Dashboard />}
+        />
+
+        <Route
+          path="/profile"
+          element={<Profile />}
         />
       </Routes>
 
