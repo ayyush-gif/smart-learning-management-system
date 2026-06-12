@@ -49,8 +49,8 @@ function Navbar() {
               src="/logo.png"
               alt="Lumina"
               style={{
-                width: "50px",
-                height: "50px",
+                width: "180px",
+                height: "auto",
                 objectFit: "contain",
               }}
             />

@@ -9,7 +9,8 @@ function Home() {
             src="/logo.png"
             alt="LUMINA"
             style={{
-              width: "140px",
+              width: "500px",
+              maxWidth: "100%",
               marginBottom: "20px",
             }}
           />
