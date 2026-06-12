@@ -1,6 +1,6 @@
 const Course = require("../models/Course");
 
-// CREATE COURSE
+// Create Course
 const createCourse = async (req, res) => {
   try {
     const {
@@ -8,6 +8,7 @@ const createCourse = async (req, res) => {
       description,
       category,
       price,
+      image,
     } = req.body;
 
     const course = await Course.create({
@@ -15,6 +16,7 @@ const createCourse = async (req, res) => {
       description,
       category,
       price,
+      image,
     });
 
     res.status(201).json(course);
@@ -25,7 +27,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-// GET ALL COURSES
+// Get All Courses
 const getCourses = async (req, res) => {
   try {
     const courses = await Course.find();
@@ -38,7 +40,7 @@ const getCourses = async (req, res) => {
   }
 };
 
-// GET SINGLE COURSE
+// Get Single Course
 const getCourseById = async (req, res) => {
   try {
     const course = await Course.findById(
@@ -59,20 +61,10 @@ const getCourseById = async (req, res) => {
   }
 };
 
-// UPDATE COURSE
+// Update Course
 const updateCourse = async (req, res) => {
   try {
-    const course = await Course.findById(
-      req.params.id
-    );
-
-    if (!course) {
-      return res.status(404).json({
-        message: "Course not found",
-      });
-    }
-
-    const updatedCourse =
+    const course =
       await Course.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -81,7 +73,13 @@ const updateCourse = async (req, res) => {
         }
       );
 
-    res.status(200).json(updatedCourse);
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found",
+      });
+    }
+
+    res.status(200).json(course);
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -89,12 +87,13 @@ const updateCourse = async (req, res) => {
   }
 };
 
-// DELETE COURSE
+// Delete Course
 const deleteCourse = async (req, res) => {
   try {
-    const course = await Course.findById(
-      req.params.id
-    );
+    const course =
+      await Course.findByIdAndDelete(
+        req.params.id
+      );
 
     if (!course) {
       return res.status(404).json({
@@ -102,10 +101,9 @@ const deleteCourse = async (req, res) => {
       });
     }
 
-    await course.deleteOne();
-
     res.status(200).json({
-      message: "Course deleted successfully",
+      message:
+        "Course deleted successfully",
     });
   } catch (error) {
     res.status(500).json({
