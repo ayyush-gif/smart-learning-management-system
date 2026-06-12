@@ -3,6 +3,8 @@ import axios from "axios";
 
 function Instructor() {
   const [courses, setCourses] = useState([]);
+  const [editingId, setEditingId] =
+    useState(null);
 
   const [formData, setFormData] =
     useState({
@@ -44,19 +46,37 @@ function Instructor() {
       const token =
         localStorage.getItem("token");
 
-      await axios.post(
-        "https://smart-learning-management-system-4dg6.onrender.com/api/courses",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      if (editingId) {
+        await axios.put(
+          `https://smart-learning-management-system-4dg6.onrender.com/api/courses/${editingId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      alert(
-        "Course Created Successfully"
-      );
+        alert(
+          "Course Updated Successfully"
+        );
+
+        setEditingId(null);
+      } else {
+        await axios.post(
+          "https://smart-learning-management-system-4dg6.onrender.com/api/courses",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        alert(
+          "Course Created Successfully"
+        );
+      }
 
       setFormData({
         title: "",
@@ -71,9 +91,27 @@ function Instructor() {
       alert(
         error.response?.data
           ?.message ||
-          "Course Creation Failed"
+          "Operation Failed"
       );
     }
+  };
+
+  const editCourse = (course) => {
+    setEditingId(course._id);
+
+    setFormData({
+      title: course.title,
+      description:
+        course.description,
+      category: course.category,
+      price: course.price,
+      image: course.image,
+    });
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const deleteCourse = async (
@@ -118,7 +156,7 @@ function Instructor() {
         Instructor Dashboard
       </h1>
 
-      {/* Create Course */}
+      {/* Course Form */}
       <div
         className="card"
         style={{
@@ -183,15 +221,18 @@ function Instructor() {
             className="btn"
             type="submit"
           >
-            Create Course
+            {editingId
+              ? "Update Course"
+              : "Create Course"}
           </button>
         </form>
       </div>
 
-      {/* My Courses */}
+      {/* Courses List */}
       <h2
         style={{
           marginBottom: "20px",
+          color: "#facc15",
         }}
       >
         My Courses
@@ -205,6 +246,18 @@ function Instructor() {
             marginBottom: "20px",
           }}
         >
+          <img
+            src={course.image}
+            alt={course.title}
+            style={{
+              width: "100%",
+              height: "220px",
+              objectFit: "cover",
+              borderRadius: "12px",
+              marginBottom: "15px",
+            }}
+          />
+
           <h3>{course.title}</h3>
 
           <p>
@@ -225,16 +278,33 @@ function Instructor() {
             ₹{course.price}
           </p>
 
-          <button
-            className="btn"
-            onClick={() =>
-              deleteCourse(
-                course._id
-              )
-            }
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              marginTop: "15px",
+            }}
           >
-            🗑 Delete Course
-          </button>
+            <button
+              className="btn"
+              onClick={() =>
+                editCourse(course)
+              }
+            >
+              ✏️ Edit
+            </button>
+
+            <button
+              className="btn"
+              onClick={() =>
+                deleteCourse(
+                  course._id
+                )
+              }
+            >
+              🗑 Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>
